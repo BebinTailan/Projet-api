@@ -1,4 +1,5 @@
 // src/games/games.controller.ts
+
 import {
   Controller,
   Get,
@@ -11,10 +12,12 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  UseGuards, // Ajout
 } from '@nestjs/common';
 import { GamesService } from './games.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'; // Ajout
 
-// (On re-définit les types ici juste pour la clarté du code)
+// Définit les types pour la validation manuelle
 type GamePayload = {
   name: string;
   published_at: number;
@@ -26,10 +29,14 @@ type GamePayload = {
 type UpdateGamePayload = Partial<GamePayload>;
 
 @Controller('games')
+@UseGuards(JwtAuthGuard) // <--- L'AJOUT LE PLUS IMPORTANT (Le Videur)
 export class GamesController {
+  
+  // TOUT LE RESTE EST LE CODE QUI FONCTIONNAIT DÉJÀ
+  
   constructor(private readonly gamesService: GamesService) {}
 
-  // --- "READ" ---
+  // "READ"
   @Get()
   findAll(
     @Query('limit') limit?: string,
@@ -45,14 +52,14 @@ export class GamesController {
     return this.gamesService.findOne(id);
   }
 
-  // --- "CREATE" ---
+  // "CREATE"
   @Post()
-  @HttpCode(HttpStatus.CREATED) // Répondre avec 201 (brief)
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() body: GamePayload) {
     return this.gamesService.create(body);
   }
 
-  // --- "UPDATE" ---
+  // "UPDATE"
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -61,9 +68,9 @@ export class GamesController {
     return this.gamesService.update(id, body);
   }
 
-  // --- "DELETE" ---
+  // "DELETE"
   @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT) // Répondre avec 204 (brief)
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.gamesService.remove(id);
   }

@@ -1,98 +1,227 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Markdown
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# API Board Game (Projet NestJS)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Ceci est une API RESTful conçue pour gérer une collection de jeux de société. Elle est construite avec **NestJS**, **TypeORM**, et utilise **SQLite** comme base de données. L'API implémente les opérations CRUD (Create, Read, Update, Delete), gère la pagination, et est sécurisée par une authentification **JSON Web Token (JWT)**.
 
-## Description
+Au premier lancement, l'API remplit automatiquement la base de données SQLite à partir du fichier `bgg_dataset.json` fourni.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technologies utilisées
 
-## Project setup
+* **NestJS** : Framework Node.js pour la construction d'applications côté serveur.
+* **TypeORM** : ORM (Object-Relational Mapper) pour TypeScript.
+* **SQLite** : Système de gestion de base de données SQL léger et "serverless".
+* **JWT (JSON Web Token)** : Standard ouvert (RFC 7519) pour la création de tokens d'accès afin de sécuriser les routes de l'API.
+* **`@nestjs/config`** : Module officiel de NestJS pour la gestion des variables d'environnement (`.env`).
 
-```bash
-$ npm install
-```
+---
 
-## Compile and run the project
+## Installation et Lancement
+
+Suivez ces étapes pour configurer et lancer le projet en environnement de développement.
+
+### 1. Prérequis
+
+Avant de commencer, vous aurez besoin des outils suivants :
+
+* **[Node.js](https://nodejs.org/)** : Assurez-vous d'avoir une version LTS (v18+).
+* **[Postman](https://www.postman.com/downloads/)** : Un client API essentiel pour tester les endpoints. Téléchargez et installez la version correspondant à votre système d'exploitation (Windows, macOS, ou Linux).
+
+### 2. Cloner le dépôt
+
+Utilisez git pour cloner le code source sur votre machine locale.
 
 ```bash
-# development
-$ npm run start
+git clone https://github.com/BebinTailan/Projet-api
+cd projet-api
+3. Installer les dépendances
+Naviguez dans le dossier du projet et utilisez npm (ou un autre gestionnaire de paquets) pour installer toutes les bibliothèques requises listées dans package.json.
 
-# watch mode
-$ npm run start:dev
+Bash
 
-# production mode
-$ npm run start:prod
-```
+npm install
+4. Configurer l'environnement
+Ce projet utilise un fichier .env pour gérer les informations sensibles (identifiants, clés secrètes).
 
-## Run tests
+À la racine du projet (au même niveau que package.json), créez un nouveau fichier nommé exactement .env.
 
-```bash
-# unit tests
-$ npm run test
+Ouvrez ce fichier et copiez-y le contenu suivant :
 
-# e2e tests
-$ npm run test:e2e
+Extrait de code
 
-# test coverage
-$ npm run test:cov
-```
+# Identifiants pour l'authentification
+AUTH_USER=marcel
+AUTH_PASSWORD=azerty
 
-## Deployment
+# Clé secrète utilisée pour signer les tokens JWT
+JWT_SECRET=votreSuperSecretPhraseQuiNeDoitEtreNullePartAilleurs
+5. Lancer l'application (Mode Développement)
+Cette commande démarre le serveur en mode "watch", ce qui signifie qu'il redémarrera automatiquement à chaque modification de fichier .ts.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Bash
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+npm run start:dev
+Le serveur est maintenant en cours d'exécution et écoute à l'adresse http://localhost:3000.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+Note sur le premier lancement : Au tout premier démarrage, le serveur détectera que la base de données est vide.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Il créera le fichier ma_base_de_donnees.sqlite à la racine du projet.
 
-## Resources
+Il lira le fichier bgg_dataset.json et exécutera un script de "seeding" (remplissage).
 
-Check out a few resources that may come in handy when working with NestJS:
+Le terminal affichera [GamesService] Remplissage terminé ! lorsque la base sera prête.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Utilisation de l'API (avec Postman)
+Toutes les routes (sauf /auth/login) sont protégées par authentification JWT. Vous devez impérativement obtenir un token avant de pouvoir interroger les autres endpoints.
 
-## Support
+1. Authentification (Flux de Login)
+C'est la première étape pour obtenir votre token d'accès.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+POST /auth/login
+Échange vos identifiants (stockés dans le .env) contre un access_token valide pour 1 heure.
 
-## Stay in touch
+Méthode : POST
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+URL : http://localhost:3000/auth/login
 
-## License
+Body :
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Sélectionnez l'onglet Body.
+
+Activez l'option raw.
+
+Dans la liste déroulante à droite, sélectionnez JSON.
+
+Collez le JSON suivant dans la zone de texte :
+
+JSON
+
+{
+  "username": "marcel",
+  "password": "azerty"
+}
+Réponse (Succès 200 OK) : Le serveur répondra avec votre token.
+
+JSON
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcmNlbCIsInN1YiI6MSwiaWF0IjoxNz... (etc)"
+}
+Action : Copiez la valeur complète du access_token.
+
+2. Accéder aux routes protégées
+Pour toutes les requêtes suivantes, vous devez prouver votre identité en utilisant ce token.
+
+Dans Postman, pour chaque nouvelle requête :
+
+Ouvrez l'onglet Authorization.
+
+Dans le menu déroulant Type, sélectionnez Bearer Token.
+
+Dans le champ Token à droite, collez le access_token que vous venez de copier.
+
+Endpoints des Jeux de Société (Routes Protégées)
+Toutes ces routes nécessitent le Bearer Token configuré comme ci-dessus.
+
+GET /games
+Récupère la liste paginée de tous les jeux, triés par nom (ordre alphabétique).
+
+Méthode : GET
+
+URL : http://localhost:3000/games
+
+Query Parameters (Optionnels) :
+
+limit : Nombre d'éléments à renvoyer. (Défaut : 20).
+
+offset : Nombre d'éléments à sauter. (Défaut : 0).
+
+Exemple : http://localhost:3000/games?limit=5&offset=10
+
+Réponses :
+
+200 OK : Renvoie un tableau d'objets Game.
+
+401 Unauthorized : Token manquant ou invalide.
+
+GET /games/:id
+Récupère un jeu de société spécifique par son id numérique.
+
+Méthode : GET
+
+URL : http://localhost:3000/games/1 (Remplacez 1 par l'ID désiré).
+
+Réponses :
+
+200 OK : Renvoie l'objet Game correspondant.
+
+404 Not Found : Si l'ID n'existe pas dans la base de données.
+
+401 Unauthorized : Token manquant ou invalide.
+
+POST /games
+Ajoute un nouveau jeu de société à la base de données.
+
+Méthode : POST
+
+URL : http://localhost:3000/games
+
+Body (raw, JSON) : (Tous les champs sont requis)
+
+JSON
+
+{
+  "name": "Mon Nouveau Jeu",
+  "published_at": 2024,
+  "min_players": 2,
+  "max_players": 4,
+  "duration": 60,
+  "age_min": 12
+}
+Réponses :
+
+201 Created : Renvoie l'objet Game nouvellement créé (avec son id).
+
+400 Bad Request : Si les données du body sont invalides (ex: age_min négatif, name manquant).
+
+401 Unauthorized : Token manquant ou invalide.
+
+PUT /games/:id
+Met à jour les informations d'un jeu existant via son id. Vous pouvez envoyer un objet partiel (un seul champ ou plusieurs).
+
+Méthode : PUT
+
+URL : http://localhost:3000/games/1 (Remplacez 1 par l'ID à modifier).
+
+Body (raw, JSON) : (Envoyez seulement les champs à mettre à jour)
+
+JSON
+
+{
+  "name": "Nouveau Nom du Jeu",
+  "duration": 75
+}
+Réponses :
+
+200 OK : Renvoie l'objet Game complet mis à jour.
+
+404 Not Found : Si l'ID n'existe pas.
+
+400 Bad Request : Si les données du body sont invalides (ex: age_min: 0).
+
+401 Unauthorized : Token manquant ou invalide.
+
+DELETE /games/:id
+Supprime un jeu de société de la base de données via son id.
+
+Méthode : DELETE
+
+URL : http://localhost:3000/games/1 (Remplacez 1 par l'ID à supprimer).
+
+Réponses :
+
+204 No Content : Indique que la suppression a réussi. Le corps de la réponse sera vide.
+
+404 Not Found : Si l'ID n'existe pas.
+
+401 Unauthorized : Token manquant ou invalide.

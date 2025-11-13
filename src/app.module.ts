@@ -1,19 +1,23 @@
 // src/app.module.ts
 
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config'; // Ajout
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-// Les ajouts de la BDD
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './games/game.entity';
-
-// --- 1. IMPORTEZ LE MODULE QUE VOUS AVEZ CRÉÉ ---
 import { GamesModule } from './games/games.module';
+import { AuthModule } from './auth/auth.module'; // Ajout
 
 @Module({
   imports: [
-    // La connexion à la BDD SQLite
+    // 1. Pour lire le .env (doit être en premier)
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    
+    // 2. La BDD
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'ma_base_de_donnees.sqlite',
@@ -21,8 +25,9 @@ import { GamesModule } from './games/games.module';
       synchronize: true,
     }),
     
-    // --- 2. AJOUTEZ-LE AUX IMPORTS DE L'APPLICATION ---
+    // 3. Nos modules métier
     GamesModule,
+    AuthModule, // Ajout
   ],
   controllers: [AppController],
   providers: [AppService],
